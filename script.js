@@ -65,17 +65,38 @@ function generatePassword() {
   if (specCharSet) {
     pwCharSet += specCharSet;    
   }
-  //initializing loop counter
-  
 
   //this loop constructs the password character by character
   for (var i = 0, n = pwCharSet.length; i < pwLength; ++i) {
       newPW += pwCharSet.charAt(Math.floor(Math.random() * n));
   }
+
+  //check if the recently generated password contains at least 1 instance of the chosen criteria
+
+  if (validateCriterion(lowCharSet, newPW) === false){
+    newPW = generatePassword()
+  }
+
+  
+
+
   return newPW;
     
+}
+
+
+function validateCriterion(criteria, uncheckedPW){
+  var result = false;
+
+  for (let k = 0; k < uncheckedPW.length; k++) {
+    if (criteria.includes(newPW.charAt(k))) {
+      result = true;
+      break
+    }
   }
-console.log(newPW);
+  return result;
+
+}
 
 
 
