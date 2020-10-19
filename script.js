@@ -44,6 +44,7 @@ var upCharSet = lowCharSet.toUpperCase();
 var numbCharSet = "1234567890";
 var specCharSet = " \"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
 var pwCharSet = "";
+var newPW = "";
 
 
 function generatePassword() {
@@ -57,16 +58,25 @@ function generatePassword() {
     pwCharSet += upCharSet;
   }
 
-  if (numCharSet) {
+  if (numeric) {
     pwCharSet += numbCharSet;
   }
 
   if (specCharSet) {
     pwCharSet += specCharSet;    
   }
+  //initializing loop counter
+  
 
+  //this loop constructs the password character by character
+  for (var i = 0, n = pwCharSet.length; i < pwLength; ++i) {
+      newPW += pwCharSet.charAt(Math.floor(Math.random() * n));
+  }
   return newPW;
-}
+    
+  }
+console.log(newPW);
+
 
 
 // Write password to the #password input
