@@ -1,9 +1,8 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+//this loop is so that the site will keep prompting the user until they provide a valid length of password
 while (true) {
-  
-
   //prompts for password length
   var pwLength = prompt("How long would you like your password to be? (please pick a number from 8 - 128)")
 
@@ -45,27 +44,29 @@ var numbCharSet = "1234567890";
 var specCharSet = "\s"+"\""+"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
 var newPW = "";
 
-
+//function to generate the password
 function generatePassword() {
   var pwCharSet = "";
   var newPW = "";
   //these if statements add the chosen character sets to a temporary character set that the new password will pull from
+
+  //adds the lower case character set if chosen
   if (lowCase) {
     pwCharSet += lowCharSet;
   }
-console.log(pwCharSet);
+
   if (upCase) {
     pwCharSet += upCharSet;
   }
-  console.log(pwCharSet);
+
   if (numeric) {
     pwCharSet += numbCharSet;
   }
-  console.log(pwCharSet);
+
   if (specialChars) {
     pwCharSet += specCharSet;    
   }
-  console.log(pwCharSet);
+
   //this loop constructs the password character by character
   for (var i = 0, n = pwCharSet.length; i < pwLength; ++i) {
       newPW += pwCharSet.charAt(Math.floor(Math.random() * n));
@@ -97,7 +98,6 @@ console.log(pwCharSet);
       newPW = generatePassword()
     }
   }
-
 
 
 //and finally, the resulting password is returned
