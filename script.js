@@ -42,48 +42,72 @@ while (true) {
 var lowCharSet = "abcdefghijklmnopqrstuvwxyz";
 var upCharSet = lowCharSet.toUpperCase();
 var numbCharSet = "1234567890";
-var specCharSet = " \"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
-var pwCharSet = "";
+var specCharSet = "\s"+"\""+"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
 var newPW = "";
 
 
 function generatePassword() {
-
+  var pwCharSet = "";
+  var newPW = "";
   //these if statements add the chosen character sets to a temporary character set that the new password will pull from
   if (lowCase) {
     pwCharSet += lowCharSet;
   }
-
+console.log(pwCharSet);
   if (upCase) {
     pwCharSet += upCharSet;
   }
-
+  console.log(pwCharSet);
   if (numeric) {
     pwCharSet += numbCharSet;
   }
-
-  if (specCharSet) {
+  console.log(pwCharSet);
+  if (specialChars) {
     pwCharSet += specCharSet;    
   }
-
+  console.log(pwCharSet);
   //this loop constructs the password character by character
   for (var i = 0, n = pwCharSet.length; i < pwLength; ++i) {
       newPW += pwCharSet.charAt(Math.floor(Math.random() * n));
   }
 
-  //check if the recently generated password contains at least 1 instance of the chosen criteria
+  //each if first checks if it was included as a criterion, if it is, then it checks if the newly generated password contains at least 1 character from that character set
 
-  if (validateCriterion(lowCharSet, newPW) === false){
-    newPW = generatePassword()
+  //checks if there is at least 1 lower case character
+  if (lowCase) {
+    if (validateCriterion(lowCharSet, newPW) === false){
+      newPW = generatePassword()
+    }
+  }
+  //checks if there is at least 1 upper case character
+  if (upCase) {
+    if (validateCriterion(upCharSet, newPW) === false){
+      newPW = generatePassword()
+    }
+  }
+  //checks if there is at least 1 number
+  if (numeric) {
+    if (validateCriterion(numbCharSet, newPW) === false){
+      newPW = generatePassword()
+    }
+  }
+  //checks if there is at least 1 special character
+  if (specialChars) {
+    if (validateCriterion(specCharSet, newPW) === false){
+      newPW = generatePassword()
+    }
   }
 
-  
 
 
+//and finally, the resulting password is returned
   return newPW;
     
 }
 
+
+//this function checks the entire character set to see if there is at least 1 character contained within the password that is also contained within the character set.
+//the charAt function is used to isolate a single character, and is used as a substring to check if it is contained within the criteria variable (which will be one of the character sets)
 
 function validateCriterion(criteria, uncheckedPW){
   var result = false;
@@ -91,9 +115,10 @@ function validateCriterion(criteria, uncheckedPW){
   for (let k = 0; k < uncheckedPW.length; k++) {
     if (criteria.includes(newPW.charAt(k))) {
       result = true;
-      break
+      break;  //technically the break isn't needed here, but it stops it from needlessly running through the rest of the password if theres at least 1 character.
     }
   }
+  //the result is returned here
   return result;
 
 }
