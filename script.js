@@ -17,11 +17,11 @@ while (true) {
   }
 }
 
-//loop continues until the user selects at least 1 criteria (loop is broken out of via a break)
+//this loop forces the user to click OK on at least on the choices
 while (true) {
-  //the rest of the criteria are true/false
+  //storing the users choices as boolean variables
   var lowCase = confirm("Do you want lower case characters?");
-  var upCase = confirm("Do you want uppercase characters");
+  var upCase = confirm("Do you want uppercase characters?");
   var numeric = confirm("Do you want numeric characters?");
   var specialChars = confirm("Do you want special characters?");
   
@@ -37,7 +37,7 @@ while (true) {
 
 }
 
-//initializing the character sets for use 
+//initializing the character sets as strings for use 
 var lowCharSet = "abcdefghijklmnopqrstuvwxyz";
 var upCharSet = lowCharSet.toUpperCase();
 var numbCharSet = "1234567890";
@@ -54,15 +54,15 @@ function generatePassword() {
   if (lowCase) {
     pwCharSet += lowCharSet;
   }
-
+  //adds the upper case character set if chosen
   if (upCase) {
     pwCharSet += upCharSet;
   }
-
+  //adds the number character set if chosen
   if (numeric) {
     pwCharSet += numbCharSet;
   }
-
+  //adds the special character set if chosen
   if (specialChars) {
     pwCharSet += specCharSet;    
   }
@@ -100,25 +100,26 @@ function generatePassword() {
   }
 
 
-//and finally, the resulting password is returned
+//if all the checks pass, then we can return the newly generated password
   return newPW;
     
 }
 
 
 //this function checks the entire character set to see if there is at least 1 character contained within the password that is also contained within the character set.
-//the charAt function is used to isolate a single character, and is used as a substring to check if it is contained within the criteria variable (which will be one of the character sets)
+//the charAt function is used to isolate a single character, to check if it matches exactly a character that is contained within the chosen character set
 
 function validateCriterion(criteria, uncheckedPW){
+  //here result is declared and set to false. This is because result will only ever be set to true if the check passes. 
   var result = false;
 
   for (let k = 0; k < uncheckedPW.length; k++) {
     if (criteria.includes(newPW.charAt(k))) {
       result = true;
-      break;  //technically the break isn't needed here, but it stops it from needlessly running through the rest of the password if theres at least 1 character.
+      break;  //technically the break isn't needed here, but it stops the loop from needlessly running through the rest of the password if theres at least 1 character.
     }
   }
-  //the result is returned here
+  //result will be false if the loop manages to go through the password completely without finding a match
   return result;
 
 }
